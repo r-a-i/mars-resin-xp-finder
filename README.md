@@ -1,9 +1,9 @@
-# photon-resin-calibration
+# mars-resin-calibration
 
-### The Photon Resin Calibration Tester (often called the Exposure Finder or XP Finder for short) 
+### The Elegoo Mars Resin Calibration Tester (often called the Exposure Finder or XP Finder for short) 
 is a method that allows you to quickly find the best exposure settings for any resin or UV film. 
 
-Due to its ease of use and fast results, it has become the de-facto test method used by thousands of owners for their Anycubic Photon (original) 3D Printer, and for other CBDtech based printers such as the Epax X1 and Elegoo Mars. 
+Adapted from [Photon Resin Finder](https://github.com/altLab/photon-resin-calibration) to support Elegoo Mars running firmware 4.3.x.
 
 This exposure range (latitude) tester removes most of the guesswork on layer time exposure by using multiple consecutive exposures to simulate different unique layer times for each test column. 
 
@@ -15,9 +15,8 @@ And it comes with the added bonus of learning all in one go, the minimum viable 
 
 ----
 
-![testphoton2 0](https://user-images.githubusercontent.com/11083514/41207954-7dd472f6-6d15-11e8-8b1c-ae59589f49c2.png)
-
-![github-photon-file-blueprint](https://user-images.githubusercontent.com/11083514/41252121-22bf60d4-6db4-11e8-8a58-d45a88982981.png)
+![testphoton2 0](readme_images/test_patern_description.png)
+![github-photon-file-blueprint](readme_images/file_name_descriptioin.png)
 
 ### QUICK READ OF A CARD
 - Start from top and locate first well formed circle column
@@ -26,7 +25,7 @@ And it comes with the added bonus of learning all in one go, the minimum viable 
 - Backtrack one colum
 - That's your sweetspot
 
-![image](https://user-images.githubusercontent.com/11083514/59956553-f5b12080-9488-11e9-8497-522ef3fb39f1.png)
+![image](readme_images/test_sample_photos.png)
 
 ----
 
@@ -53,7 +52,13 @@ Kudos to @Reonarudo for finding what makes .photon files tick. Check his project
 
 Kudos to Toby1kanobi in the anycubic owners forum for translating and cleaning up the gcode file used to switch modes in the printer
 
+Kudos to dxxb for starting this transition to Mars and figuring out the g-code (here)[https://github.com/dxxb/photon-resin-calibration]
+
+Kudos to toluse for figuring out how to hack the cbddlp files (here)[https://github.com/toluse/photon-resin-calibration]
+
 ---
 
 ![image](https://user-images.githubusercontent.com/11083514/40305776-ebbef9c6-5cf3-11e8-9763-3a95179a456c.png)
-You can find the source CAD Model that was used for this hack test [here](https://a360.co/2IDQpNy) 
+You can find the source CAD Model that was used for this hack test [here](https://a360.co/2IDQpNy) and in the test_model directory.
+
+

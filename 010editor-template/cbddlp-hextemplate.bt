@@ -1,0 +1,141 @@
+//------------------------------------------------
+//--- 010 Editor v9.0.2 Binary Template
+//
+//      File: Photon
+//   Authors: Reox86, ToLuSe
+//   Version: 0.2.0
+//   Purpose:
+//  Category:
+// File Mask:
+//  ID Bytes:
+//   History: X3msnake - offTime corrected it is a float instead of int
+//            ToLuSe   - Enhanced for Version 2 using CBDDLPinfo source
+//------------------------------------------------
+
+typedef struct
+{
+  int magic <fgcolor=cDkPurple>;
+  int version <fgcolor=cPurple>;
+  float bedXmm <fgcolor=cWhite>;
+  float bedYmm <fgcolor=cWhite>;
+  float bedZmm <fgcolor=cWhite>;
+  int reserved0[3] <fgcolor=cBlack>;
+  float layerHeightmm <fgcolor=cWhite>;
+  float exposureTimeSeconds <fgcolor=cGreen>;
+  float exposureTimeBottomSeconds <fgcolor=cGreen>;
+  float offTimeSeconds <fgcolor=cGreen>;
+  int numBottomLayers <fgcolor=cLtBlue>;
+  int resolutionXPixel <fgcolor=cSilver>;
+  int resolutionYPixel <fgcolor=cSilver>;
+  int previewOneOffsetAddress <fgcolor=cBlue>;
+  int layersDefinitionOffsetAddress <fgcolor=cBlue>;
+  int numLayers <fgcolor=cLtBlue>;
+  int previewTwoOffsetAddress <fgcolor=cBlue>;
+  
+  if (version == 2)
+  {
+    int printTime <fgcolor=cGreen>;
+    int projectType <fgcolor=cPurple>;
+    int printParametersOffsetAddress <fgcolor=cBlue>;
+    int printParametersSize <fgcolor=cLtBlue>;
+    int antiAliasingLevel <fgcolor=cYellow>;
+    short lightPWM <fgcolor=cLtRed>;
+    short bottomLightPWM <fgcolor=cLtRed>;
+
+    int reserved1[3] <fgcolor=cBlack>;
+  }
+  else
+  {
+    int reserved1 <fgcolor=cBlack>;
+
+    int projectType <fgcolor=cYellow, bgcolor=cWhite>;
+
+    int reserved2[6] <fgcolor=cBlack>;
+  }
+} header_t;
+
+typedef struct(int size)
+{
+  BYTE previewDataBlock[size] <fgcolor=cBlack, bgcolor=cWhite>;
+} preview_data_t;
+
+typedef struct
+{
+  int widthPixel <fgcolor=cSilver>;
+  int heightPixel <fgcolor=cSilver>;
+  int previewStartPos <fgcolor=cBlue>;
+  int previewSize <fgcolor=cLtBlue>;
+
+  int reserved[4] <fgcolor=cBlack>;
+
+  preview_data_t previewData(previewSize);
+} preview_t;
+
+typedef struct
+{
+  float bottomLiftDistancemm <fgcolor=cWhite>;
+  float bottomLiftSpeed <fgcolor=cAqua>;
+  float liftingDistancemm <fgcolor=cWhite>;
+  float liftingSpeed <fgcolor=cAqua>;
+  float retractSpeed <fgcolor=cAqua>;
+  float volumeMl <fgcolor=cSilver>;
+  float weightG <fgcolor=cSilver>;
+  float costDollars <fgcolor=cSilver>;
+  float bottomLightOffDelaySeconds <fgcolor=cGreen>;
+  float lightOffDelaySeconds <fgcolor=cDkGreen>;
+  int numBottomLayers <fgcolor=cLtBlue>;
+
+  float P1 <fgcolor=cDkGray>;
+  float P2 <fgcolor=cDkGray>;
+  float P3 <fgcolor=cDkGray>;
+  float P4 <fgcolor=cDkGray>;
+} print_parameters_t;
+
+typedef struct
+{
+  float layerPositionZmm <fgcolor=cWhite>;
+  float layerExposureSeconds <fgcolor=cGreen>;
+  float layerOffTimeSeconds <fgcolor=cDkGreen>;
+  int dataAddress <fgcolor=cBlue>;
+  int dataSize <fgcolor=cLtBlue>;
+
+  int reserved[4] <fgcolor=cBlack>;
+} layer_definition_t;
+
+typedef struct(int size)
+{
+    BYTE layerDataBlock[size] <fgcolor=cBlack, bgcolor=cWhite>;
+} layer_data_t;
+
+struct FILE
+{
+  header_t header;
+
+  if (header.previewOneOffsetAddress)
+  {
+    FSeek(header.previewOneOffsetAddress);
+    preview_t previewOne;
+  }
+
+  if (header.previewTwoOffsetAddress)
+  {
+    FSeek(header.previewTwoOffsetAddress);
+    preview_t previewTwo;
+  }
+
+  if (header.version == 2 && header.printParametersOffsetAddress)
+  {
+    FSeek(header.printParametersOffsetAddress);
+    print_parameters_t printParameters;
+  }
+
+  FSeek(header.layersDefinitionOffsetAddress);
+  layer_definition_t layerDefinition[header.numLayers];
+
+  local int i;
+  for( i = 0; i < header.numLayers; i++ )
+  {
+    FSeek(layerDefinition[i].dataAddress);
+    layer_data_t layerData(layerDefinition[i].dataSize);
+  }
+} file;
