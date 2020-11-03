@@ -24,8 +24,10 @@ At the end of the test:
 - Rinse and wash as directed by the resin's instructions. 
 - UV Post-cure as directed by the resin's instructions. 
 - After curing gently peel off the test print from the build platform.
+- Clean and filter your vat: Underexposed resin may create floaters or gels that will affect other prints.
 
 ### INTERPRETING THE RESULTS ###
+- Resin exposure times are very sensitive to temperature. Make a note on the print at what temperature it was done.
 - Resin underexposure: the small lines and details are missing 
 - Resin minimum exposure: the first column were the cured graphics begin to show 
 - Resin sweet-spot: the first column where you can see most of the details (the one just before the negative spaces start to get filled in)

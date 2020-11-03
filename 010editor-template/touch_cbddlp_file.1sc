@@ -1,0 +1,60 @@
+//------------------------------------------------
+//--- 010 Editor v2.0 Script File
+//
+//      File: TouchCbddlpFile.1sc
+//   Authors: Rodrigo Alvarez
+//   Version: 1.0
+//   Purpose: Update the necessary fields of a cbdlfile (version=2)
+//            to create an exposure test.
+//  Category: Binary
+//   History: 
+//   1.0   1st pass
+//------------------------------------------------
+RequiresVersion( 4.0 );
+
+// Define local variables
+float layer_height = 0.04; // This value will be overwritten by filename
+char filename[512] = GetFileName();
+int i; // General counter
+
+// Get Layer Heigh from Filename
+int match,size;
+match = RegExSearch( filename, "_[0-9]*um", size );
+local string tempStr="";
+for ( i = match + 1; i < match + size -2; i++){
+    tempStr = tempStr + filename[i];
+}layer_height = Atof( tempStr )/1000;
+
+// Get Exposure step from filename
+float exposure_step;
+match = RegExSearch( filename, "2-20s", size );
+if( match > 0 ){
+    exposure_step = 2;} else {
+    exposure_step = 1;
+}
+
+// Get Exposure for Layer 2
+float layer2Exposure = exposure_step;
+if( RegExSearch( filename, "11-20s", size ) > 0 ){    layer2Exposure = 10;}
+
+
+Printf( "For file: %s\n", filename);
+Printf( "Setting: layer_height=%f; exposureTimeSeconds=%f; layer2Exposure=%f\n", layer_height,exposure_step, layer2Exposure);
+
+// Set parameters in file
+
+file.header.layerHeightmm = layer_height;
+file.header.exposureTimeSeconds = exposure_step;
+
+file.printParameters.liftingDistancemm = 0; // Confirm this is set to 0. Otherwise the build plate will lift between exposures, recirculate the resin, and fail the test
+
+file.layerDefinition[0].layerPositionZmm = layer_height * 1;
+file.layerDefinition[1].layerPositionZmm = layer_height * 2;
+
+for( i = 2; i < file.header.numLayers ; i++ ){
+    file.layerDefinition[i].layerPositionZmm = layer_height * 3;
+}
+file.layerDefinition[2].layerExposureSeconds = layer2Exposure;
+
+FileSave();FileClose();
+
