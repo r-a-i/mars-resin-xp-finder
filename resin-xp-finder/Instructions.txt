@@ -2,40 +2,46 @@
 ---------------------------------------------
 Download and unzip the 'resin-xp-finder' folder to a USB stick
 
+### OVERALL PROCESS ###
+There are several resin test files that should work with resins with a cure time per layer between 1 and 20s.
+- 1. Pick your desired layer thickness. 
+- 2. Pick your desired anti-aliasing level [0,4,8]. 
+- 3. Setup your printer for the test.
+- 4. Print the test_file.
+- 5. Interpret the result and find the sweet spot
+- 6. Do a test print with your set point to confirm.
+Note: All test files have 3 base layers with 100s exposure. This should create good addition and a strong 'card'. If you need to change this, see 010editor-template/README.md
+
 ### SETUP ###
 - Make sure your machine is levelled before running the test
 - Insert and fix the vat and build platform
-- Load the vat with the resin you want to test
+- Load the vat with the resin you want to test and let the temperature stabilize
 
-### ENABLE MACHINE TEST MODE ###
-- Run 'resin-calibration-setup.gcode' (one of the files in the 'resin-xp-finder' folder)
+### ENABLE MACHINE TEST MODE | CRITICAL ###
+- Run 'resin-calibration-setup.gcode' (one of the files in the 'resin-xp-finder' folder). This is critical because this setup file has some FM that prevents the print bed from lifting between trial exposures. 
 
 ### TEST YOUR RESIN ###
-There are several initial resin test files that work for most resins
-'resin-test-50u.B120.1-10.cbddlp'
+- Use the selected test file and print it.
 
-25u/50u  - Layer height: 25/50 microns
-B100 - Base Layer exposure time: 100 sec
-1-10 - Exposure range time: 1 to 10 sec
-
-### CLEAN AND CURE FILM ###
+### CLEAN AND CURE TEST FILM ###
 At the end of the test:
 - Remove the build platform.
-- Rinse and wash as directed by the resin's instructions. 
-- UV Post-cure as directed by the resin's instructions. 
-- After curing gently peel off the test print from the build platform.
-- Clean and filter your vat: Underexposed resin may create floaters or gels that will affect other prints.
+- Rinse and wash your print following the resin's instructions. 
+- UV Post-cure following the resin's instructions. 
+- After curing gently peel off the test print from the build platform (you can peel before washing or curing if that is your normal workflow)
+- Filter your resin and clean and your vat: The underexposed sections of the resin may create floaters or gels that will affect other prints.
 
 ### INTERPRETING THE RESULTS ###
+- Write down (with a Sharpie) the resin, date, temperature.
 - Resin exposure times are very sensitive to temperature. Make a note on the print at what temperature it was done.
 - Resin underexposure: the small lines and details are missing 
 - Resin minimum exposure: the first column were the cured graphics begin to show 
 - Resin sweet-spot: the first column where you can see most of the details (the one just before the negative spaces start to get filled in)
 - Resin overexposure: colunmns where the negative space gets filled in
-- To know what exposure time each column represents, read the column number (C1 = 1 second, C2 = 2 seconds...)
+- To know what exposure time each column represents, read the column number in seconds
 
 ### RETURN YOUR MACHINE TO PRINT MODE ###
-- Run 'print-mode_restore.gcode' (also in the 'resin-xp-finder' folder), or power-cycle the printer
+- Run 'print-mode_restore.gcode' (also in the 'resin-xp-finder' folder), or power-cycle the printer.
 
 ### PRINT AND ENJOY ###
 - Dial in your sweet exposure time back into CHITUBOX and enjoy the magic!

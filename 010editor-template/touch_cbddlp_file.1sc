@@ -13,19 +13,28 @@
 RequiresVersion( 4.0 );
 
 // Define local variables
-float layer_height = 0.04; // This value will be overwritten by filename
+float base_layer_height = 0.050; // [mm] This value is default for all sets to create a rigid base.
+float layer_height = 0.04; // [mm] This value will be overwritten by filename
 char filename[512] = GetFileName();
 int i; // General counter
 
 // Get Layer Heigh from Filename
 int match,size;
-match = RegExSearch( filename, "_[0-9]*um", size );
-local string tempStr="";
-for ( i = match + 1; i < match + size -2; i++){
-    tempStr = tempStr + filename[i];
-}layer_height = Atof( tempStr )/1000;
+match = RegExSearch( filename, "[0-9]*um_", size );
+if (match > 0) {
+    local string tempStr="";
+    for ( i = match; i < match + 2; i++){
+        tempStr = tempStr + filename[i];
+    }    layer_height = Atof( tempStr )/1000;
+    /*
+    Printf( "Match: %i\n", match);
+    Printf( "size: %i\n", size);
+    Printf( "tempStr: %s\n", tempStr);*/
+} else {
+    Printf( "Error: Could not find Layer height in file name.\n");
+}
 
-// Get Exposure step from filename
+// Get Exposure step from filename (Vestigial but may be rescued)
 float exposure_step;
 match = RegExSearch( filename, "2-20s", size );
 if( match > 0 ){
@@ -33,28 +42,26 @@ if( match > 0 ){
     exposure_step = 1;
 }
 
-// Get Exposure for Layer 2
-float layer2Exposure = exposure_step;
-if( RegExSearch( filename, "11-20s", size ) > 0 ){    layer2Exposure = 10;}
-
 
 Printf( "For file: %s\n", filename);
-Printf( "Setting: layer_height=%f; exposureTimeSeconds=%f; layer2Exposure=%f\n", layer_height,exposure_step, layer2Exposure);
+Printf( "Setting: layer_height=%f; exposureTimeSeconds=%f;\n", layer_height,exposure_step);
 
-// Set parameters in file
+// - - - Set parameters in file - - - 
 
 file.header.layerHeightmm = layer_height;
 file.header.exposureTimeSeconds = exposure_step;
 
 file.printParameters.liftingDistancemm = 0; // Confirm this is set to 0. Otherwise the build plate will lift between exposures, recirculate the resin, and fail the test
 
-file.layerDefinition[0].layerPositionZmm = layer_height * 1;
-file.layerDefinition[1].layerPositionZmm = layer_height * 2;
-
-for( i = 2; i < file.header.numLayers ; i++ ){
-    file.layerDefinition[i].layerPositionZmm = layer_height * 3;
+// Set z-distances for base
+for( i = 0; i < file.header.numBottomLayers ; i++ ){
+    file.layerDefinition[i].layerPositionZmm = base_layer_height * (i+1);
 }
-file.layerDefinition[2].layerExposureSeconds = layer2Exposure;
+
+// Set z-distances for exposure layers
+for( i = file.header.numBottomLayers; i < file.header.numLayers ; i++ ){
+    file.layerDefinition[i].layerPositionZmm = base_layer_height*file.header.numBottomLayers + layer_height;
+}
 
 FileSave();FileClose();
 
