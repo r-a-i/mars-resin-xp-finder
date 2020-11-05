@@ -19,6 +19,7 @@ Note: All test files have 3 base layers with 100s exposure. This should create g
 
 ### ENABLE MACHINE TEST MODE | CRITICAL ###
 - Run 'resin-calibration-setup.gcode' (one of the files in the 'resin-xp-finder' folder). This is critical because this setup file has some FM that prevents the print bed from lifting between trial exposures. 
+- Optionally: Run 'setup-max-height-to-145mm.gcode' if you experience an issue with the build plate going too high after the calibration print. Beware that this will re-configure your printer to have 10 mm less of build height. 
 
 ### TEST YOUR RESIN ###
 - Use the selected test file and print it.
