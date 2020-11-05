@@ -1,15 +1,15 @@
-# ANYCUBIC RESIN EXPOSURE FINDER by X3msnake
+# ANYCUBIC RESIN EXPOSURE FINDER by rAi
 ---------------------------------------------
 Download and unzip the 'resin-xp-finder' folder to a USB stick
 
 ### OVERALL PROCESS ###
 There are several resin test files that should work with resins with a cure time per layer between 1 and 20s.
-- 1. Pick your desired layer thickness. 
-- 2. Pick your desired anti-aliasing level [0,4,8]. 
-- 3. Setup your printer for the test.
-- 4. Print the test_file.
-- 5. Interpret the result and find the sweet spot
-- 6. Do a test print with your set point to confirm.
+1. Pick your desired layer thickness. 
+2. Pick your desired anti-aliasing level [0,4,8]. 
+3. Setup your printer for the test.
+4. Print the test_file.
+5. Interpret the result and find the sweet spot
+6. Do a test print with your set point to confirm.
 Note: All test files have 3 base layers with 100s exposure. This should create good addition and a strong 'card'. If you need to change this, see 010editor-template/README.md
 
 ### SETUP ###

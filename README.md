@@ -3,29 +3,40 @@
 ### The Elegoo Mars Resin Calibration Tester (often called the Exposure Finder or XP Finder for short) 
 is a method that allows you to quickly find the best exposure settings for any resin or UV film. 
 
-Adapted from [Photon Resin Finder](https://github.com/altLab/photon-resin-calibration) to support Elegoo Mars running firmware 4.3.x.
+**TLDR:** Download the '[resin-xp-finder](resin-xp-finder/)' foler to a USB stick, read '[instructions.txt](resin-xp-finder/instructions.txt)' and enjoy.
 
-This exposure range (latitude) tester removes most of the guesswork on layer time exposure by using multiple consecutive exposures to simulate different unique layer times for each test column. 
+**Credit:** Adapted from [Photon Resin Finder](https://github.com/altLab/photon-resin-calibration) to support Elegoo Mars running firmware 4.3.x.
 
-And it comes with the added bonus of learning all in one go, the minimum viable width for positive and negative space details of each column exposure time.
+This exposure range (latitude) tester removes most of the guesswork on layer time exposure by using multiple consecutive exposures on a single 7 minute print to implement different unique layer times for each test column. 
+In a single print, you will discover the exposure sweet spot and the minimum viable width for positive and negative space details of each exposure time.
 
+### Some useful videos about how to use this
 [How to use - by InventorSquare](https://youtu.be/4jYgyjmp6lo)
 
 [How to use - Photonsters Youtube by Jay Sterling](https://www.youtube.com/watch?v=P5p4IgZuqMA)
 
 ----
-
+The following image is from the original Photon implementation describing the overall block structure. Use this to understand each part of the test block.
 ![testphoton2 0](readme_images/test_patern_description.png)
-![github-photon-file-blueprint](readme_images/file_name_descriptioin.png)
+
+The following image is the actual Mars card implementation with exposures from 1 to 20 seconds in a single print. 
+![card2](readme_images/card2.png)
+
+The following image shows the dimensions of all the features within a block test.
+![block_pattern](readme_images/block_pattern.png)
 
 ### QUICK READ OF A CARD
-- Start from top and locate first well formed circle column
+- Start from top left and locate first well formed block (the one where the negative and positive rectangles are well formed)
 - Move to bottom last visible Circle
-- Move right untill the circle starts to clog
+- Move right until the circle starts to clog
 - Backtrack one colum
 - That's your sweetspot
 
+The following is from the original Photon tests for reference
 ![image](readme_images/test_sample_photos.png)
+
+The following image is from the Mars test printed in Siraya Tech Fast Black. This resin is somewhat transparent and hard to image, but you can see the sweet spot is about 10.5 seconds.
+![result](readme_images/result.png)
 
 ----
 
@@ -57,8 +68,7 @@ Kudos to dxxb for starting this transition to Mars and figuring out the g-code (
 Kudos to toluse for figuring out how to hack the cbddlp files (here)[https://github.com/toluse/photon-resin-calibration]
 
 ---
-
-![image](https://user-images.githubusercontent.com/11083514/40305776-ebbef9c6-5cf3-11e8-9763-3a95179a456c.png)
-You can find the source CAD Model that was used for this hack test [here](https://a360.co/2IDQpNy) and in the test_model directory.
+![fusion_model](readme_images/fusion_model.png)
+You can find the source CAD Model that was used for this hack test in the [test_model](test_model/) directory, and the instructions for reproducing the cbddlp files [here](010editor-template/README.md).
 
 
