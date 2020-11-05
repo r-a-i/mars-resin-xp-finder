@@ -1,7 +1,8 @@
-# mars-resin-calibration
+# ELEGOO Mars Resin Exposure Calibration
 
-### The Elegoo Mars Resin Calibration Tester (often called the Exposure Finder or XP Finder for short) 
-is a method that allows you to quickly find the best exposure settings for any resin or UV film. 
+![card2](readme_images/card2.png)
+
+### The Elegoo Mars Resin Calibration Tester (often called the Exposure Finder or XP Finder for short) is a method that allows you to quickly find the best exposure settings for any resin. 
 
 **TLDR:** Download the '[resin-xp-finder](resin-xp-finder/)' foler to a USB stick, read '[instructions.txt](resin-xp-finder/instructions.txt)' and enjoy.
 
@@ -19,7 +20,7 @@ In a single print, you will discover the exposure sweet spot and the minimum via
 The following image is from the original Photon implementation describing the overall block structure. Use this to understand each part of the test block.
 ![testphoton2 0](readme_images/test_patern_description.png)
 
-The following image is the actual Mars card implementation with exposures from 1 to 20 seconds in a single print. 
+The following image is the actual Mars card implementation with exposures from 1 to 20 seconds in a single print. There are 3 base layer, each with 100 second exposure, and then the 20 * 1 second exposures. The total print time is about 7 mins (due to pauses of the Mars).
 ![card2](readme_images/card2.png)
 
 The following image shows the dimensions of all the features within a block test.
@@ -35,7 +36,7 @@ The following image shows the dimensions of all the features within a block test
 The following is from the original Photon tests for reference
 ![image](readme_images/test_sample_photos.png)
 
-The following image is from the Mars test printed in Siraya Tech Fast Black. This resin is somewhat transparent and hard to image, but you can see the sweet spot is about 10.5 seconds.
+The following image is from the Mars test printed in Siraya Tech Fast Black. This resin is somewhat transparent and therefore hard to image, but you can see the sweet spot is about 10.5 seconds.
 ![result](readme_images/result.png)
 
 ----
